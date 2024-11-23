@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "720176457858",
+    "project_id": "fir-project-500fd",
+    "storage_bucket": "fir-project-500fd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720176457858:android:e5a409b8cd1ce2260dec9b",
+        "android_client_info": {
+          "package_name": "com.alexmajumder.live_score_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbxMttcAO7I-sq35wn6BLloA8QXxg6nak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
