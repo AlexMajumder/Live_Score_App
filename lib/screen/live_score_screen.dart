@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:live_score_app/match_score.dart';
 
-class LiveScoreScreen extends StatefulWidget { // 1hr 5min
+class LiveScoreScreen extends StatefulWidget {
+  // 1hr 5min
   const LiveScoreScreen({super.key});
 
   @override
@@ -10,32 +12,15 @@ class LiveScoreScreen extends StatefulWidget { // 1hr 5min
 }
 
 class _LiveScoreScreenState extends State<LiveScoreScreen> {
-  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  List<CricketMatchScore> _cricketMatchList = [];
+  final List<CricketMatchScore> _cricketMatchList = [];
 
-  bool _inProgress = false;
-
-  Future<void> _getScoreData() async {
-    _inProgress = true;
-    setState(() {});
-
+  void _extractData(QuerySnapshot<Map<String, dynamic>>? snapshot) async {
     _cricketMatchList.clear();
-    final QuerySnapshot snapshot =
-        await _firebaseFirestore.collection('cricket').get();
 
-    for (DocumentSnapshot doc in snapshot.docs) {
+    for (DocumentSnapshot doc in snapshot?.docs ?? []) {
       _cricketMatchList.add(CricketMatchScore.fromJson(
           doc.id, doc.data() as Map<String, dynamic>));
-
-      _inProgress = false;
-      setState(() {});
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _getScoreData();
   }
 
   @override
@@ -45,7 +30,7 @@ class _LiveScoreScreenState extends State<LiveScoreScreen> {
         title: const Text('Home'),
       ),
       body: StreamBuilder(
-          stream: _firebaseFirestore.collection('cricket').snapshots(),
+          stream: FirebaseFirestore.instance.collection('cricket').snapshots(),
           builder: (context,
               AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -61,6 +46,8 @@ class _LiveScoreScreenState extends State<LiveScoreScreen> {
             }
 
             if (snapshot.hasData) {
+              _extractData(snapshot.data);
+
               return ListView.builder(
                 itemCount: _cricketMatchList.length,
                 itemBuilder: (context, index) {
