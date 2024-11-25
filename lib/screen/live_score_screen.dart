@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:live_score_app/match_score.dart';
 
@@ -27,7 +26,11 @@ class _LiveScoreScreenState extends State<LiveScoreScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: const Text(
+          'Live',
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
+        centerTitle: true,
       ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('cricket').snapshots(),
@@ -60,8 +63,9 @@ class _LiveScoreScreenState extends State<LiveScoreScreen> {
                       radius: 8,
                     ),
                     title: Text(cricketMatchScore.matchId),
-                    subtitle: Text(
-                        'Team 1: ${cricketMatchScore.teamOneName}\nTeam 2 ${cricketMatchScore.teamTwoName}'),
+                    subtitle: Text('Team 1: ${cricketMatchScore.teamOneName}\n'
+                        'Team 2 ${cricketMatchScore.teamTwoName}\n'
+                        'Winner: ${cricketMatchScore.winnerTeam == '' ? 'Pending' : cricketMatchScore.winnerTeam}'),
                     trailing: Text(
                         '${cricketMatchScore.teamOneScore}/${cricketMatchScore.teamTwoScore}'),
                   );
@@ -72,6 +76,10 @@ class _LiveScoreScreenState extends State<LiveScoreScreen> {
               child: Text('No data Found'),
             );
           }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
+      ),
     );
   }
 
