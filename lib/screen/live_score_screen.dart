@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:live_score_app/match_score.dart';
 
+import '../card.dart';
+
 class LiveScoreScreen extends StatefulWidget {
   // 1hr 5min
   const LiveScoreScreen({super.key});
@@ -26,6 +28,7 @@ class _LiveScoreScreenState extends State<LiveScoreScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.green,
         title: const Text(
           'Live',
           style: TextStyle(fontWeight: FontWeight.w600),
@@ -56,19 +59,7 @@ class _LiveScoreScreenState extends State<LiveScoreScreen> {
                 itemBuilder: (context, index) {
                   CricketMatchScore cricketMatchScore =
                       _cricketMatchList[index];
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor:
-                          _indicatorColor(cricketMatchScore.isMatchRunning),
-                      radius: 8,
-                    ),
-                    title: Text(cricketMatchScore.matchId),
-                    subtitle: Text('Team 1: ${cricketMatchScore.teamOneName}\n'
-                        'Team 2 ${cricketMatchScore.teamTwoName}\n'
-                        'Winner: ${cricketMatchScore.winnerTeam == '' ? 'Pending' : cricketMatchScore.winnerTeam}'),
-                    trailing: Text(
-                        '${cricketMatchScore.teamOneScore}/${cricketMatchScore.teamTwoScore}'),
-                  );
+                  return const display_card();
                 },
               );
             }
@@ -83,7 +74,19 @@ class _LiveScoreScreenState extends State<LiveScoreScreen> {
     );
   }
 
-  Color _indicatorColor(bool isMatchRunning) {
-    return isMatchRunning ? Colors.green : Colors.grey;
-  }
 }
+
+
+// ListTile(
+// leading: CircleAvatar(
+// backgroundColor:
+// _indicatorColor(cricketMatchScore.isMatchRunning),
+// radius: 8,
+// ),
+// title: Text(cricketMatchScore.matchId),
+// subtitle: Text('Team 1: ${cricketMatchScore.teamOneName}\n'
+// 'Team 2 ${cricketMatchScore.teamTwoName}\n'
+// 'Winner: ${cricketMatchScore.winnerTeam == '' ? 'Pending' : cricketMatchScore.winnerTeam}'),
+// trailing: Text(
+// '${cricketMatchScore.teamOneScore}/${cricketMatchScore.teamTwoScore}'),
+// );

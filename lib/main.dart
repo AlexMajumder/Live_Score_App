@@ -12,7 +12,6 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await FirebaseNotificationManager.initialize();
-  await FlutterLocalNotificationManager.initialize();
 
   print(await FirebaseNotificationManager.getFcmToken());
 
